@@ -797,11 +797,23 @@ color: rgba(57,198,214,.7);
     .swal2-cancel  { background: rgba(255,255,255,.08) !important; border-radius: 50px !important; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width:480px) {
-      #suratin { width:90px; height:90px; }
-      #suratin img { width:72px; height:72px; }
-      #Content { padding:28px 20px 24px; }
-    }
+   @media (max-width:480px) {
+  #suratin {
+    width:90px;
+    height:90px;
+  }
+
+  #suratin img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  #Content {
+    padding:28px 20px 24px;
+  }
+}
   </style>
 </head>
 <body>

@@ -22,6 +22,13 @@
 /* ── RESET ── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
+    /* Hilangkan highlight biru di HP */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
 /* ── DESIGN TOKENS ── */
 :root {
   --bg:          #060610;
@@ -889,6 +896,7 @@ html, body {
 <!-- Hidden audio -->
 <audio id="linkmp3" style="display:none">https://raw.githubusercontent.com/XYZax404/zaxfile/main/oui%20-%20jeremih%20edit%20audio.m4a</audio>
 <audio id="clickSound" src="https://cdn.aceimg.com/r2HyYfNEe.mp3" preload="auto"></audio>
+  <audio id="soundGamau" src="https://www.soundjay.com/misc/sounds/fart-with-reverb-01.mp3" preload="auto"></audio>
 <!-- Ambient background -->
 <div class="stars-bg"></div>
 <div class="orb orb-1"></div>
@@ -914,8 +922,7 @@ html, body {
     <div id="bq">
       <div>
         <img src="https://cdn.aceimg.com/nfiR7ZhWm.png" id="fotoakhir"/>
-        <img src="https://cdn.aceimg.com/EgaOBa2CH.png" id="fotoakhir3" style="display:none"/>
-        <img src="https://cdn.aceimg.com/genIVSO5E.png" id="fotoakhir2" style="display:none"/>     
+        <img src="https://cdn.aceimg.com/EgaOBa2CH.png" id="fotoakhir2" style="display:none"/>     
       </div>
 
       <!-- PERTANYAAN AWAL -->
@@ -1290,6 +1297,43 @@ function multifungsi() {
 async function menuju() {
   await swals.fire('OK! 🎉', 'Kirim pesan ke WhatsApp aku, ya!', 'success');
   window.location = "https://api.whatsapp.com/send?phone=&text=" + encodeURIComponent(pesanwhatsapp);
+}
+
+  function ditolak() {
+  if (flagg === 0) return;
+  flagg = 0;
+  
+  // Putar suara
+  const sound = document.getElementById('soundGamau');
+  if (sound) sound.play().catch(() => {});
+  
+  // Tampilkan pesan "kabur ya 🤭" dengan animasi
+  const pesanTolak = document.getElementById('pesanTolak');
+  pesanTolak.classList.add('show');
+  
+  // Sembunyikan tombol "Mau"
+  const tombolMau = document.getElementById('By');
+  tombolMau.style.display = 'none';
+  
+  // Ambil tombol "Gamau"
+  const btn = document.getElementById('Bn');
+  
+  // Animasi terlempar + muter + lenyap
+  btn.style.transition = 'all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+  btn.style.transform = 'translateX(300px) translateY(-200px) rotate(720deg) scale(0)';
+  btn.style.opacity = '0';
+  
+  // Hilangkan tombol setelah animasi selesai
+  setTimeout(() => {
+    btn.style.display = 'none';
+  }, 700);
+  
+  // Sembunyikan juga tombol Bn2 (jika ada)
+  const Bn2 = document.getElementById('Bn2');
+  if (Bn2) Bn2.style.display = 'none';
+  
+  // Kembalikan flag setelah 1 detik
+  setTimeout(() => { flagg = 1; }, 1000);
 }
 
 /* ── DITERIMA DENGAN URUTAN TEKS YANG BENAR ── */

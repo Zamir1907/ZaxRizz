@@ -1299,6 +1299,10 @@ async function menuju() {
   window.location = "https://api.whatsapp.com/send?phone=&text=" + encodeURIComponent(pesanwhatsapp);
 }
 
+  function ditolak() {
+  if (flagg === 0) return;
+  flagg = 0;
+
  const sound = document.getElementById('soundGamau');
   if (sound) {
     sound.currentTime = 0; // reset ke awal

@@ -845,12 +845,12 @@ html, body {
 @keyframes growing-grass-ans--8 { 0% { transform-origin:bottom right; transform:rotate(10deg)  scale(0); } }
 
 /* ─── BOUNCE avatar ─── */
+.bounce { animation:bounce 1s; }
 @keyframes bounce {
   0%,20%,50%,80%,100% { transform:translateY(0); }
   40%  { transform:translateY(-28px); }
   60%  { transform:translateY(-12px); }
 }
-.bounce { animation:bounce 1s; }
 
 /* ─── FADE UP helper ─── */
 @keyframes fadeUp {
@@ -888,7 +888,7 @@ html, body {
 
 <!-- Hidden audio -->
 <audio id="linkmp3" style="display:none">https://raw.githubusercontent.com/XYZax404/zaxfile/main/oui%20-%20jeremih%20edit%20audio.m4a</audio>
-
+<audio id="clickSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
 <!-- Ambient background -->
 <div class="stars-bg"></div>
 <div class="orb orb-1"></div>
@@ -1222,16 +1222,46 @@ function fthilang() {
 
 /* ── BUKA SURAT ── */
 function memulai() {
+  document.getElementById('clickSound')?.play();
   const suratin = document.getElementById('suratin');
   suratin.classList.add('bounce');
+      // Efek tambahan: scale + shadow + ring
+    suratin.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+    suratin.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      suratin.style.transform = 'scale(1)';
+    }, 100);
+    
+    // Efek ring berkedip cepat
+    const rings = document.querySelectorAll('.pulse-ring');
+    rings.forEach(ring => {
+      ring.style.animation = 'none';
+      ring.offsetHeight; // force reflow
+      ring.style.animation = 'pulseRing 0.6s ease-out 2';
+    });
   suratin.style.pointerEvents = 'none';
 
   setTimeout(() => {
-    document.getElementById('ket').style.opacity = '0';
+        // Animasi hilang teks "klik profil aku" yang lucu
+    const ketEl = document.getElementById('ket');
+    ketEl.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    ketEl.style.opacity = '0';
+    ketEl.style.transform = 'translateY(-20px) scale(0.5) rotate(-10deg)';
+    ketEl.style.letterSpacing = '10px';
+    setTimeout(() => {
+      ketEl.style.display = 'none';
+    }, 500);
 
     const content = document.getElementById('Content');
     content.style.display = 'block';
     requestAnimationFrame(() => requestAnimationFrame(() => content.classList.add('visible')));
+        // Animasi masuk card yang lucu (bounce)
+    content.style.transform = 'scale(0.7) translateY(50px)';
+    content.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    setTimeout(() => {
+      content.style.transform = 'scale(1) translateY(0)';
+      content.style.opacity = '1';
+    }, 50);
 
     const foto = document.getElementById('fotoakhir');
     foto.style.display = 'block';

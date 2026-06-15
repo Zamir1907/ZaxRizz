@@ -1305,7 +1305,25 @@ async function menuju() {
   
   // Putar suara
   const sound = document.getElementById('soundGamau');
-  if (sound) sound.play().catch(() => {});
+  if (sound) {
+    sound.play().catch(err => {
+      console.log("Sound gagal diputar:", err);
+      // Fallback: buat suara buatan (beep)
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.frequency.value = 880;
+        gainNode.gain.value = 0.2;
+        oscillator.start();
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
+        oscillator.stop(audioCtx.currentTime + 0.5);
+        audioCtx.resume();
+      } catch(e) {}
+    });
+  }
   
   // Tampilkan pesan "kabur ya 🤭" dengan animasi
   const pesanTolak = document.getElementById('pesanTolak');

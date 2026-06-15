@@ -914,16 +914,17 @@ html, body {
     <div id="bq">
       <div>
         <img src="https://cdn.aceimg.com/nfiR7ZhWm.png" id="fotoakhir"/>
-        <img src="https://cdn.aceimg.com/genIVSO5E.png" id="fotoakhir2" style="display:none"/>
+        <img src="https://cdn.aceimg.com/EgaOBa2CH.png" id="fotoakhir3" style="display:none"/>
+        <img src="https://cdn.aceimg.com/genIVSO5E.png" id="fotoakhir2" style="display:none"/>     
       </div>
 
       <!-- PERTANYAAN AWAL -->
-      <div id="kalimat">Mau ga jadi pacarku?<div id="pesanTolak">kabur ya 🤭</div></div>
+      <div id="kalimat">Mau ga jadi pacarku?<div id="pesanTolak">EH KABUR JIR !!</div></div>
       <div id="kalimatb">seriously tho, aku pengen banget</div>
       <div id="kalimatc">boleh ga? 🥺</div>
 
       <!-- TEKS YANG MUNCUL BERTAHAP (AWALNYA SEMUA HIDDEN) -->
-      <div id="kalimat2">yay! kamu mau!! 🥹</div>
+      <div id="kalimat2">yay! kamu mau!! 🌷</div>
       <div id="kalimatb2">tunggu sebentar ya..</div>
       <div id="kalimatc2"></div>
 
@@ -1195,6 +1196,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const Bn2 = document.getElementById('Bn2');
   Bn2.textContent = 'Gamau';
   Bn2.style.display = 'none';
+
+document.getElementById('fotoakhir3').style.display = 'none';
   
   // Sembunyikan semua teks bertahap dari awal
   document.getElementById('kalimat2').style.display = 'none';
@@ -1290,42 +1293,6 @@ async function menuju() {
   window.location = "https://api.whatsapp.com/send?phone=&text=" + encodeURIComponent(pesanwhatsapp);
 }
 
-/* ── DITOLAK ── */
-function ditolak() {
-  if (flagg === 0) return;
-  flagg = 0;
-
-  document.getElementById('Bn').style.display = 'none';
-  const Bn2 = document.getElementById('Bn2');
-  Bn2.style.cssText = `
-    display:inline-flex;
-    align-items:center; justify-content:center;
-    cursor:pointer;
-    width:80px; height:36px;
-    border-radius:50px;
-    border:1.5px solid rgba(241,91,181,.5);
-    background:transparent;
-    color:rgba(241,91,181,.75);
-    font-size:13px;
-    font-family:'ProductSans',sans-serif;
-    letter-spacing:.03em;
-    position:fixed;
-    z-index:9999;
-    transition:border-color .2s;
-  `;
-
-  const moveBtn = () => {
-    Bn2.style.left = Math.random() * (window.innerWidth  - 120) + 'px';
-    Bn2.style.top  = Math.random() * (window.innerHeight -  60) + 'px';
-  };
-  Bn2.onmouseover  = moveBtn;
-  Bn2.ontouchstart = (e) => { e.preventDefault(); moveBtn(); };
-  moveBtn();
-
-  setTimeout(() => { flagg = 1; }, 300);
-}
-function ditolak2() { ditolak(); }
-
 /* ── DITERIMA DENGAN URUTAN TEKS YANG BENAR ── */
 function diterima() {
   if (flag === 0) return;
@@ -1404,7 +1371,18 @@ function diterima() {
   }, 2800);
 
   // 8. Pindah ke halaman bunga setelah semua teks selesai
-  setTimeout(() => goFlower(), 3800);
+setTimeout(() => {
+  // Munculkan gambar ke-3
+  ftganti = 2; // asumsikan fotoakhir3
+  ftmuncul();
+  
+  // Sembunyikan teks "makasih udah mau" dan "ini buat kamu"
+  document.getElementById('kalimat2b').style.display = 'none';
+  document.getElementById('kalimatb3').style.display = 'none';
+  
+  // Tunggu 3 detik baru ke flower
+  setTimeout(() => goFlower(), 3000);
+}, 3800);
 }
 
 /* ── GO TO FLOWER PAGE ── */

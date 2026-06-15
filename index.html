@@ -1345,30 +1345,6 @@ function diterima() {
     }, 10);
   }, 1300);
 
-  // 6. Munculkan "makasih udah mau"
-  setTimeout(() => {
-    document.getElementById('kalimat2b').style.display = 'block';
-    document.getElementById('kalimat2b').style.opacity = '0';
-    document.getElementById('kalimat2b').style.transform = 'scale(0.9)';
-    document.getElementById('kalimat2b').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    setTimeout(() => {
-      document.getElementById('kalimat2b').style.opacity = '1';
-      document.getElementById('kalimat2b').style.transform = 'scale(1)';
-    }, 10);
-  }, 2000);
-
-  // 7. Munculkan "ini buat kamu"
-  setTimeout(() => {
-    document.getElementById('kalimatb3').style.display = 'block';
-    document.getElementById('kalimatb3').style.opacity = '0';
-    document.getElementById('kalimatb3').style.transform = 'translateY(10px)';
-    document.getElementById('kalimatb3').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    setTimeout(() => {
-      document.getElementById('kalimatb3').style.opacity = '1';
-      document.getElementById('kalimatb3').style.transform = 'translateY(0)';
-    }, 10);
-  }, 2800);
-
   // 8. Pindah ke halaman bunga setelah semua teks selesai
 setTimeout(() => goFlower(), 3800);
 }

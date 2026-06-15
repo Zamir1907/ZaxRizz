@@ -1428,6 +1428,17 @@ function goFlower() {
   requestAnimationFrame(() => fc.classList.add('active'));
   audio.play().catch(() => {});
 }
+
+  // Matikan klik kanan
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
+
+// Matikan drag
+document.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+});
+  
 </script>
 </body>
 </html>

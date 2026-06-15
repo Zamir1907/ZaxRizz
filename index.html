@@ -953,10 +953,6 @@ html, body {
       <div id="kalimat2b">makasih udah mau 💜</div>
       <div id="kalimatb3"></div>
       <div id="kalimatc3"><div id="ctimer"></div></div>
-
-      <div id="kalimat3">ini buat kamu 🌿</div>
-      <div id="kalimatb3" style="display:none"></div>
-      <div id="kalimatc3" style="display:none"></div>
     </div>
 
     <!-- Tombol -->
@@ -1313,18 +1309,22 @@ function ditolak() {
 function ditolak2() { ditolak(); }
 
 /* ── DITERIMA ── */
-function diterima() {
-  if (flag === 0) return;
-  flag = 0; ftom = 0;
+ function diterima() {
+    if (flag === 0) return;
+    flag = 0; ftom = 0;
 
-  const T = document.getElementById('Tombol');
-  T.style.opacity = '0';
-  setTimeout(() => { T.style.display = 'none'; }, 400);
+    // sembunyikan tombol
+    const T = document.getElementById('Tombol');
+    T.style.opacity = '0';
+    setTimeout(() => { T.style.display = 'none'; }, 400);
 
-  fthilang();
-  setTimeout(() => { ftganti = 1; ftmuncul(); }, 700);
-  setTimeout(() => goFlower(), 2000);
-}
+    // ganti gif → gif kedua setelah 0.7s
+    fthilang();
+    setTimeout(() => { ftganti = 1; ftmuncul(); }, 700);
+
+    // langsung ke bunga setelah 2 detik
+    setTimeout(() => goFlower(), 2000);
+  }
 
 /* ── GO TO FLOWER PAGE ── */
 function goFlower() {

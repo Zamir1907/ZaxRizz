@@ -1299,30 +1299,10 @@ async function menuju() {
   window.location = "https://api.whatsapp.com/send?phone=&text=" + encodeURIComponent(pesanwhatsapp);
 }
 
-  function ditolak() {
-  if (flagg === 0) return;
-  flagg = 0;
-  document.getElementById('soundGamau')?.play();
-  // Putar suara
-  const sound = document.getElementById('soundGamau');
+ const sound = document.getElementById('soundGamau');
   if (sound) {
-    sound.play().catch(err => {
-      console.log("Sound gagal diputar:", err);
-      // Fallback: buat suara buatan (beep)
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        oscillator.frequency.value = 880;
-        gainNode.gain.value = 0.2;
-        oscillator.start();
-        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
-        oscillator.stop(audioCtx.currentTime + 0.5);
-        audioCtx.resume();
-      } catch(e) {}
-    });
+    sound.currentTime = 0; // reset ke awal
+    sound.play().catch(err => console.log("Sound error:", err));
   }
   
   // Tampilkan pesan "kabur ya 🤭" dengan animasi

@@ -243,53 +243,28 @@ html, body {
   margin-bottom:20px;
 }
 #fotoakhir {
-  width:160px; height:160px; object-fit:contain; display:none;
+  width:160px; height:160px; object-fit:contain;
   filter:drop-shadow(0 4px 20px rgba(155,93,229,.3));
 }
 #fotoakhir2, #fotoakhir3, #fotoakhir4, #fotoakhir5 { display:none; }
 
-/* kalimat utama */
-#kalimat {
-  font-family:var(--font-d);
-  font-size:clamp(22px,5.5vw,30px);
-  font-weight:300; line-height:1.45;
-  background: linear-gradient(135deg, #fff 0%, var(--v2) 60%, var(--m1) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-  margin-bottom:8px; position:relative;
-}
-#pesanTolak {
-  font-size:12.5px; font-weight:300; color:var(--p1);
-  opacity:0; position:absolute;
-  left:50%; transform:translateX(-50%) scale(0);
-  white-space:nowrap; bottom:-22px;
-  transition:all .5s var(--ease);
-}
+/* kalimat utama — semua teks disembunyikan dulu kecuali pertanyaan awal */
+#kalimat { font-family:var(--font-d); font-size:clamp(22px,5.5vw,30px); font-weight:300; line-height:1.45; background: linear-gradient(135deg, #fff 0%, var(--v2) 60%, var(--m1) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; position:relative; }
+#pesanTolak { font-size:12.5px; font-weight:300; color:var(--p1); opacity:0; position:absolute; left:50%; transform:translateX(-50%) scale(0); white-space:nowrap; bottom:-22px; transition:all .5s var(--ease); }
 #pesanTolak.show { opacity:1; transform:translateX(-50%) scale(1); }
+#kalimatb, #kalimatc { font-size:13px; font-weight:300; color:var(--muted); line-height:1.65; margin-top:6px; }
 
-#kalimatb, #kalimatc {
-  font-size:13px; font-weight:300;
-  color:var(--muted); line-height:1.65; margin-top:6px;
+/* TEKS YANG MUNCUL BERTAHAP — AWALNYA SEMUA DISEMBUNYIKAN */
+#kalimat2, #kalimat2b, #kalimatb2, #kalimatc2, #kalimatb3, #kalimatc3 {
+  display: none;
 }
-
-/* jawaban */
-#kalimat2, #kalimat2b, #kalimat3 {
-  font-family:var(--font-d);
-  font-size:clamp(20px,5vw,27px); font-weight:300;
-  background:linear-gradient(135deg,#fff,var(--m1) 80%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-  margin-bottom:4px; display:none;
-}
-#kalimatb2, #kalimatc2, #kalimatb3, #kalimatc3 {
-  font-size:13.5px; font-weight:300;
-  color:var(--muted); line-height:1.75; margin-top:6px; display:none;
-}
-#ctimer {
-  font-size:28px; font-weight:400; color:var(--p1);
-  text-shadow:0 0 16px rgba(241,91,181,.5);
-}
+#kalimat2 { font-family:var(--font-d); font-size:clamp(20px,5vw,27px); font-weight:300; background:linear-gradient(135deg,#fff,var(--m1) 80%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
+#kalimatb2 { font-size:13.5px; font-weight:300; color:var(--muted); line-height:1.75; margin-top:6px; }
+#kalimat2b { font-family:var(--font-d); font-size:clamp(20px,5vw,27px); font-weight:300; background:linear-gradient(135deg,#fff,var(--v2) 80%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
+#kalimatb3 { font-size:13.5px; font-weight:300; color:var(--muted); line-height:1.75; margin-top:6px; }
+#kalimatc3 { font-size:13.5px; font-weight:300; color:var(--muted); line-height:1.75; margin-top:6px; }
 #kalimatc3 b { color:var(--p1); }
+#ctimer { font-size:28px; font-weight:400; color:var(--p1); text-shadow:0 0 16px rgba(241,91,181,.5); }
 
 /* ── BUTTONS ── */
 #Tombol {
@@ -942,16 +917,18 @@ html, body {
         <img src="https://cdn.aceimg.com/genIVSO5E.png" id="fotoakhir2" style="display:none"/>
       </div>
 
+      <!-- PERTANYAAN AWAL -->
       <div id="kalimat">Mau ga jadi pacarku?<div id="pesanTolak">kabur ya 🤭</div></div>
       <div id="kalimatb">seriously tho, aku pengen banget</div>
       <div id="kalimatc">boleh ga? 🥺</div>
 
+      <!-- TEKS YANG MUNCUL BERTAHAP (AWALNYA SEMUA HIDDEN) -->
       <div id="kalimat2">yay! kamu mau!! 🥹</div>
       <div id="kalimatb2">tunggu sebentar ya..</div>
       <div id="kalimatc2"></div>
 
       <div id="kalimat2b">makasih udah mau 💜</div>
-      <div id="kalimatb3"></div>
+      <div id="kalimatb3">ini buat kamu 😉</div>
       <div id="kalimatc3"><div id="ctimer"></div></div>
     </div>
 
@@ -1199,7 +1176,10 @@ html, body {
 
 <script>
 /* ── STATE ── */
-let ftom=0, ftganti=0, flag=1, flagg=1;
+let ftom = 0;
+let flag = 1;
+let flagg = 1;
+let ftganti = 0;
 let pesanwhatsapp = "Aku mau kok jadi pacarmu ><";
 
 const audio = new Audio(document.getElementById('linkmp3').textContent.trim());
@@ -1215,13 +1195,21 @@ window.addEventListener('DOMContentLoaded', () => {
   const Bn2 = document.getElementById('Bn2');
   Bn2.textContent = 'Gamau';
   Bn2.style.display = 'none';
+  
+  // Sembunyikan semua teks bertahap dari awal
+  document.getElementById('kalimat2').style.display = 'none';
+  document.getElementById('kalimatb2').style.display = 'none';
+  document.getElementById('kalimat2b').style.display = 'none';
+  document.getElementById('kalimatb3').style.display = 'none';
 });
 
 /* ── GIF helpers ── */
 function ftmuncul() {
   const el = document.getElementById('fotoakhir');
   const ids = ['fotoakhir','fotoakhir2','fotoakhir3','fotoakhir4','fotoakhir5'];
-  if (ftganti > 0) el.src = document.getElementById(ids[ftganti]).src;
+  if (ftganti > 0 && document.getElementById(ids[ftganti])) {
+    el.src = document.getElementById(ids[ftganti]).src;
+  }
   el.style.opacity = '1';
   el.style.transform = 'scale(1)';
 }
@@ -1308,23 +1296,86 @@ function ditolak() {
 }
 function ditolak2() { ditolak(); }
 
-/* ── DITERIMA ── */
- function diterima() {
-    if (flag === 0) return;
-    flag = 0; ftom = 0;
+/* ── DITERIMA DENGAN URUTAN TEKS YANG BENAR ── */
+function diterima() {
+  if (flag === 0) return;
+  flag = 0;
+  ftom = 0;
 
-    // sembunyikan tombol
-    const T = document.getElementById('Tombol');
-    T.style.opacity = '0';
-    setTimeout(() => { T.style.display = 'none'; }, 400);
+  // 1. Sembunyikan tombol
+  const T = document.getElementById('Tombol');
+  T.style.opacity = '0';
+  setTimeout(() => { T.style.display = 'none'; }, 400);
 
-    // ganti gif → gif kedua setelah 0.7s
-    fthilang();
-    setTimeout(() => { ftganti = 1; ftmuncul(); }, 700);
+  // 2. Sembunyikan pertanyaan awal
+  document.getElementById('kalimat').style.opacity = '0';
+  document.getElementById('kalimatb').style.opacity = '0';
+  document.getElementById('kalimatc').style.opacity = '0';
+  
+  setTimeout(() => {
+    document.getElementById('kalimat').style.display = 'none';
+    document.getElementById('kalimatb').style.display = 'none';
+    document.getElementById('kalimatc').style.display = 'none';
+  }, 300);
 
-    // langsung ke bunga setelah 2 detik
-    setTimeout(() => goFlower(), 2000);
-  }
+  // 3. Ganti GIF
+  fthilang();
+  setTimeout(() => { 
+    ftganti = 1; 
+    ftmuncul(); 
+  }, 700);
+
+  // 4. Munculkan teks "yay! kamu mau!!"
+  setTimeout(() => {
+    document.getElementById('kalimat2').style.display = 'block';
+    document.getElementById('kalimat2').style.opacity = '0';
+    document.getElementById('kalimat2').style.transform = 'scale(0.9)';
+    document.getElementById('kalimat2').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    setTimeout(() => {
+      document.getElementById('kalimat2').style.opacity = '1';
+      document.getElementById('kalimat2').style.transform = 'scale(1)';
+    }, 10);
+  }, 800);
+
+  // 5. Munculkan "tunggu sebentar ya.."
+  setTimeout(() => {
+    document.getElementById('kalimatb2').style.display = 'block';
+    document.getElementById('kalimatb2').style.opacity = '0';
+    document.getElementById('kalimatb2').style.transform = 'translateY(10px)';
+    document.getElementById('kalimatb2').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    setTimeout(() => {
+      document.getElementById('kalimatb2').style.opacity = '1';
+      document.getElementById('kalimatb2').style.transform = 'translateY(0)';
+    }, 10);
+  }, 1300);
+
+  // 6. Munculkan "makasih udah mau"
+  setTimeout(() => {
+    document.getElementById('kalimat2b').style.display = 'block';
+    document.getElementById('kalimat2b').style.opacity = '0';
+    document.getElementById('kalimat2b').style.transform = 'scale(0.9)';
+    document.getElementById('kalimat2b').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    setTimeout(() => {
+      document.getElementById('kalimat2b').style.opacity = '1';
+      document.getElementById('kalimat2b').style.transform = 'scale(1)';
+    }, 10);
+  }, 2000);
+
+  // 7. Munculkan "ini buat kamu"
+  setTimeout(() => {
+    document.getElementById('kalimatb3').style.display = 'block';
+    document.getElementById('kalimatb3').style.opacity = '0';
+    document.getElementById('kalimatb3').style.transform = 'translateY(10px)';
+    document.getElementById('kalimatb3').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    setTimeout(() => {
+      document.getElementById('kalimatb3').style.opacity = '1';
+      document.getElementById('kalimatb3').style.transform = 'translateY(0)';
+    }, 10);
+  }, 2800);
+
+  // 8. Pindah ke halaman bunga setelah semua teks selesai
+  setTimeout(() => goFlower(), 3800);
+}
 
 /* ── GO TO FLOWER PAGE ── */
 function goFlower() {

@@ -1302,7 +1302,7 @@ async function menuju() {
   function ditolak() {
   if (flagg === 0) return;
   flagg = 0;
-  
+  document.getElementById('soundGamau')?.play();
   // Putar suara
   const sound = document.getElementById('soundGamau');
   if (sound) {

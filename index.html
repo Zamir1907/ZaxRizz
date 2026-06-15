@@ -1197,7 +1197,6 @@ window.addEventListener('DOMContentLoaded', () => {
   Bn2.textContent = 'Gamau';
   Bn2.style.display = 'none';
 
-document.getElementById('fotoakhir3').style.display = 'none';
   
   // Sembunyikan semua teks bertahap dari awal
   document.getElementById('kalimat2').style.display = 'none';
@@ -1371,18 +1370,7 @@ function diterima() {
   }, 2800);
 
   // 8. Pindah ke halaman bunga setelah semua teks selesai
-setTimeout(() => {
-  // Munculkan gambar ke-3
-  ftganti = 2; // asumsikan fotoakhir3
-  ftmuncul();
-  
-  // Sembunyikan teks "makasih udah mau" dan "ini buat kamu"
-  document.getElementById('kalimat2b').style.display = 'none';
-  document.getElementById('kalimatb3').style.display = 'none';
-  
-  // Tunggu 3 detik baru ke flower
-  setTimeout(() => goFlower(), 3000);
-}, 3800);
+setTimeout(() => goFlower(), 3800);
 }
 
 /* ── GO TO FLOWER PAGE ── */

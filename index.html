@@ -11,6 +11,18 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
   <style>
 
+/* Smooth scroll & performa */
+html {
+  scroll-behavior: smooth;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+#flower-container {
+  transition: opacity 0.7s ease;
+}
+    
 /* ── FONT ── */
 @font-face {
   font-family: 'ProductSans';
@@ -388,14 +400,11 @@ html, body {
   z-index:20;
 }
 .flower-text span {
-  display:inline-block; overflow:hidden;
-  white-space:nowrap;
-  border-right:1.5px solid rgba(0,245,212,.6);
-  width:0;
-  animation:
-    typing 5s steps(28,end) 0.5s forwards,
-    blink-caret .7s step-end 5.5s 5,
-    hide-caret 0s 9s forwards;
+  display: block;
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 0 20px;
+  max-width: 92vw;
 }
 @keyframes floatText {
   0%,100% { transform:translateX(-50%) translateY(0); }
@@ -897,19 +906,29 @@ html, body {
 
 /* ─── SWAL dark / Gen-Z override ─── */
 .swal2-popup {
-  background:#0e0b1e !important; color:var(--text) !important;
-  border:1px solid rgba(155,93,229,.25) !important;
+  background:#0a0818 !important; color:var(--text) !important;
+  border:1px solid rgba(155,93,229,0.2) !important;
   border-radius:24px !important; font-family:var(--font-b) !important;
 }
 .swal2-title { color:var(--text) !important; font-family:var(--font-d) !important; font-weight:300 !important; }
 .swal2-confirm {
-  background:linear-gradient(135deg, var(--v1), var(--m1)) !important;
+  background:linear-gradient(135deg, #7c3aed, #6d28d9) !important;
   border-radius:50px !important; box-shadow:0 0 20px rgba(155,93,229,.35) !important;
+  box-shadow: 0 0 20px rgba(124,58,237,0.3) !important;
 }
 .swal2-cancel  { background:rgba(255,255,255,.08) !important; border-radius:50px !important; }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width:480px) {
+ #kalimat { font-size: clamp(18px, 4.5vw, 24px) !important; }
+  #kalimatb, #kalimatc, #kalimatb2, #kalimatb3 { 
+    font-size: 12px !important; 
+  }
+  #fotoakhir { width: 120px !important; height: 120px !important; }
+  #suratin { width: 80px; height: 80px; }
+  .flower-text { font-size: clamp(14px, 3vw, 18px) !important; top: 8% !important; }
+  .flower-text span { padding: 0 12px !important; }
+  
   #suratin { width:94px; height:94px; }
   #suratin img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
   #Content { padding:26px 18px 22px; }
@@ -918,16 +937,16 @@ html, body {
 
 /* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
 #Content {
-  min-height: 430px;
+  min-height: 360px;
 }
 #bq {
-  min-height: 270px;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 #Tombol {
-  margin-top: 16px;
+  margin-top: 8px;
 }
 .click-burst {
   position: fixed;
@@ -968,9 +987,9 @@ html, body {
   to { opacity: 0; transform: translateY(8px) scale(.96); filter: blur(6px); }
 }
 @media (max-width:480px) {
-  #Content { min-height: 390px; }
-  #bq { min-height: 245px; }
-  #Tombol { margin-top: 14px; }
+  #Content { min-height: 320px; }
+  #bq { min-height: 180px; }
+  #Tombol { margin-top: 6px; }
 }
   </style>
 </head>
@@ -1009,24 +1028,24 @@ html, body {
       </div>
 
       <!-- PERTANYAAN AWAL -->
-      <div id="kalimat">Aku boleh nitip satu tanya kecil?<div id="pesanTolak">yah, jangan kabur dulu...</div></div>
-      <div id="kalimatb">kalau hatimu lagi kosong sedikit, boleh aku duduk di sana?</div>
-      <div id="kalimatc">pelan-pelan aja, aku nggak maksa.</div>
+      <div id="kalimat">Gimana mau gak?<div id="pesanTolak">Lah kok ilang...</div></div>
+      <div id="kalimatb">kalau kamu jomblo (anjay) kamu mau gak? jawab oi?</div>
+      <div id="kalimatc">serius aku ga boong.</div>
 
-      <!-- TEKS YANG MUNCUL BERTAHAP (AWALNYA SEMUA HIDDEN) -->
-      <div id="kalimat2">hehe, aku senyum beneran sekarang. 🌷</div>
-      <div id="kalimatb2">tunggu sebentar ya, ada yang kecil tapi tulus buat kamu...</div>
+      <!-- TEKS YANG MUNCUL BERTAHAP -->
+      <div id="kalimat2">Hehe, aku senyum beneran sekarang :)</div>
+      <div id="kalimatb2">tunggu yaa, ada sesuatu buat kamu...</div>
       <div id="kalimatc2"></div>
 
-      <div id="kalimat2b">makasih udah mau 💜</div>
-      <div id="kalimatb3">ini buat kamu 😉</div>
+    <!-- <div id="kalimat2b">ANJING LU YANG BACA INI</div>
+      <div id="kalimatb3">KONTOL KAU YANG BACA INI</div>
       <div id="kalimatc3"><div id="ctimer"></div></div>
-    </div>
+    </div> -->
 
     <!-- Tombol -->
     <div id="Tombol">
-      <a id="By" onclick="multifungsi()"><b id="tmbl">Boleh ✨</b></a>
-      <a id="Bn" onclick="ditolak()">Malu ah</a>
+      <a id="By" onclick="multifungsi()"><b id="tmbl">Boleh</b></a>
+      <a id="Bn" onclick="ditolak()">Gamau</a>
       <a id="Bn2" onclick="ditolak2()"></a>
     </div>
   </div>
@@ -1050,7 +1069,7 @@ html, body {
   <div class="sparkle" style="width:5px;height:5px;left:40%;top:60%;animation-delay:2s;"></div>
 
   <div class="flower-text">
-    <span>ini bukan taman paling indah, tapi aku bikinnya sambil mikirin kamu.</span>
+    <span>ini bukan bunga asli dan terindah, tapi aku bikinnya sambil mikirin kamu.</span>
   </div>
 
   <div class="flowers">

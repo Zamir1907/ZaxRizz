@@ -1028,19 +1028,16 @@ html, body {
       </div>
 
       <!-- PERTANYAAN AWAL -->
-      <div id="kalimat">Gimana mau gak?<div id="pesanTolak">Lah kok ilang...</div></div>
-      <div id="kalimatb">kalau kamu jomblo (anjay) kamu mau gak? jawab oi?</div>
-      <div id="kalimatc">serius aku ga boong.</div>
+      <div id="kalimat">Mau jadi pacarku?</div>
+      <div id="kalimatb">Kalau jawabannya "iya", aku bakal seneng banget.</div>
+      <div id="kalimatc">Aku serius kok.</div>
 
       <!-- TEKS YANG MUNCUL BERTAHAP -->
-      <div id="kalimat2">Hehe, aku senyum beneran sekarang :)</div>
-      <div id="kalimatb2">tunggu yaa, ada sesuatu buat kamu...</div>
+      <div id="kalimat2">Senyum kamu pasti lucu. 🌹</div>
+      <div id="kalimatb2">Ini ada sesuatu buat kamu.</div>
       <div id="kalimatc2"></div>
 
-    <!-- <div id="kalimat2b">ANJING LU YANG BACA INI</div>
-      <div id="kalimatb3">KONTOL KAU YANG BACA INI</div>
-      <div id="kalimatc3"><div id="ctimer"></div></div>
-    </div> -->
+    <!-- BABI, ANJING, MONYET, BINATANG KAU!!! -->
 
     <!-- Tombol -->
     <div id="Tombol">
@@ -1068,9 +1065,9 @@ html, body {
   <div class="sparkle" style="width:8px;height:8px;left:80%;top:40%;animation-delay:3s;background:radial-gradient(circle,rgba(241,91,181,.7),transparent 70%);"></div>
   <div class="sparkle" style="width:5px;height:5px;left:40%;top:60%;animation-delay:2s;"></div>
 
-  <div class="flower-text">
-    <span>ini bukan bunga asli dan terindah, tapi aku bikinnya sambil mikirin kamu.</span>
-  </div>
+<div class="flower-text">
+  <span>Nggak seindah bunga asli, tapi aku bikinnya khusus buat kamu.</span>
+</div>
 
   <div class="flowers">
 
@@ -1357,12 +1354,12 @@ async function showFlowerDialog() {
 
   const nameBit = targetName ? `, ${targetName}` : '';
   const result = await swals.fire({
-    title: `Jujur ya${nameBit}...`,
-    html: 'Kalau ini bikin kamu senyum sedikit aja, aku boleh tahu lewat chat? Aku pengen dengar versi kamu.',
+title: `Boleh jujur nggak${nameBit}?`,
+html: 'Kalau ini bikin kamu senyum, chat aku ya. Itu aja udah bikin aku seneng.',
+confirmButtonText: 'Chat aku ❤️',
+cancelButtonText: 'Lihat bunganya dulu'
     icon: 'question',
     showCancelButton: true,
-    confirmButtonText: 'Chat aku',
-    cancelButtonText: 'Lihat bunganya dulu'
   });
 
   if (result.isConfirmed) menuju();

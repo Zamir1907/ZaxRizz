@@ -915,6 +915,63 @@ html, body {
   #Content { padding:26px 18px 22px; }
   .pulse-ring { width:94px; height:94px; }
 }
+
+/* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
+#Content {
+  min-height: 430px;
+}
+#bq {
+  min-height: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+#Tombol {
+  margin-top: 16px;
+}
+.click-burst {
+  position: fixed;
+  left: var(--x);
+  top: var(--y);
+  z-index: 3000;
+  pointer-events: none;
+  font-size: var(--s, 16px);
+  color: var(--c, #f15bb5);
+  text-shadow: 0 0 12px currentColor;
+  animation: clickBurst .9s var(--ease) forwards;
+}
+@keyframes clickBurst {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.35) rotate(0deg); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35) rotate(var(--r)); }
+}
+.swal2-popup {
+  width: min(90vw, 390px) !important;
+  padding: 24px 22px !important;
+  box-shadow: 0 0 36px rgba(155,93,229,.22), 0 18px 60px rgba(0,0,0,.5) !important;
+}
+.swal2-html-container {
+  line-height: 1.65 !important;
+  color: rgba(240,237,232,.72) !important;
+}
+.swal2-show.zax-swal-in {
+  animation: zaxSwalIn .42s cubic-bezier(.25,.46,.45,.94) both !important;
+}
+.swal2-hide.zax-swal-out {
+  animation: zaxSwalOut .22s ease both !important;
+}
+@keyframes zaxSwalIn {
+  from { opacity: 0; transform: translateY(14px) scale(.94); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes zaxSwalOut {
+  to { opacity: 0; transform: translateY(8px) scale(.96); filter: blur(6px); }
+}
+@media (max-width:480px) {
+  #Content { min-height: 390px; }
+  #bq { min-height: 245px; }
+  #Tombol { margin-top: 14px; }
+}
   </style>
 </head>
 <body>
@@ -952,13 +1009,13 @@ html, body {
       </div>
 
       <!-- PERTANYAAN AWAL -->
-      <div id="kalimat">Mau ga jadi pacarku?<div id="pesanTolak">EH KABUR JIR !!</div></div>
-      <div id="kalimatb">seriously tho, aku pengen banget</div>
-      <div id="kalimatc">boleh ga? 🥺</div>
+      <div id="kalimat">Aku boleh nitip satu tanya kecil?<div id="pesanTolak">yah, jangan kabur dulu...</div></div>
+      <div id="kalimatb">kalau hatimu lagi kosong sedikit, boleh aku duduk di sana?</div>
+      <div id="kalimatc">pelan-pelan aja, aku nggak maksa.</div>
 
       <!-- TEKS YANG MUNCUL BERTAHAP (AWALNYA SEMUA HIDDEN) -->
-      <div id="kalimat2">yay! kamu mau!! 🌷</div>
-      <div id="kalimatb2">tunggu sebentar ya..</div>
+      <div id="kalimat2">hehe, aku senyum beneran sekarang. 🌷</div>
+      <div id="kalimatb2">tunggu sebentar ya, ada yang kecil tapi tulus buat kamu...</div>
       <div id="kalimatc2"></div>
 
       <div id="kalimat2b">makasih udah mau 💜</div>
@@ -968,8 +1025,8 @@ html, body {
 
     <!-- Tombol -->
     <div id="Tombol">
-      <a id="By" onclick="multifungsi()"><b id="tmbl">Mau ✨</b></a>
-      <a id="Bn" onclick="ditolak()">Gamau</a>
+      <a id="By" onclick="multifungsi()"><b id="tmbl">Boleh ✨</b></a>
+      <a id="Bn" onclick="ditolak()">Malu ah</a>
       <a id="Bn2" onclick="ditolak2()"></a>
     </div>
   </div>
@@ -993,7 +1050,7 @@ html, body {
   <div class="sparkle" style="width:5px;height:5px;left:40%;top:60%;animation-delay:2s;"></div>
 
   <div class="flower-text">
-    <span>yaudah, ambil nih bwatmu 🙂</span>
+    <span>ini bukan taman paling indah, tapi aku bikinnya sambil mikirin kamu.</span>
   </div>
 
   <div class="flowers">
@@ -1214,7 +1271,10 @@ let ftom = 0;
 let flag = 1;
 let flagg = 1;
 let ftganti = 0;
-let pesanwhatsapp = "Aku mau kok jadi pacarmu ><";
+const whatsappUrl = 'https://wa.me/6281818647631';
+let targetName = '';
+let flowerDialogShown = false;
+let pesanwhatsapp = 'hai bang, aku dari iniapaanbang. bunganya lucu... aku senyum dikit :)';
 
 const audio = new Audio(document.getElementById('linkmp3').textContent.trim());
 
@@ -1224,10 +1284,80 @@ const swals = Swal.mixin({
   background: '#0e0b1e', color: '#f0ede8',
 });
 
+
+function playClick() {
+  const sound = document.getElementById('clickSound');
+  if (!sound) return;
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
+}
+
+function getTargetName() {
+  const raw = new URLSearchParams(window.location.search).get('nama') || '';
+  return raw.trim().replace(/[^a-zA-ZÀ-ÿ\s.'-]/g, '').slice(0, 24);
+}
+
+function applyPersonalCopy() {
+  targetName = getTargetName();
+  if (!targetName) return;
+
+  document.getElementById('kalimat').childNodes[0].nodeValue = `${targetName}, aku boleh nitip satu tanya kecil?`;
+  document.getElementById('kalimatb').textContent = `kalau hati ${targetName} lagi kosong sedikit, boleh aku duduk di sana?`;
+  document.getElementById('kalimat2').textContent = `hehe, ${targetName} bikin aku senyum beneran sekarang. 🌷`;
+  pesanwhatsapp = `hai bang, aku ${targetName} dari iniapaanbang. bunganya lucu... aku senyum dikit :)`;
+}
+
+function burstHearts(origin) {
+  const rect = origin.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const symbols = ['♡', '✦', '✧', '❀', '✿'];
+  const colors = ['#f15bb5', '#c77dff', '#00f5d4', '#fee440', '#ffffff'];
+
+  for (let i = 0; i < 18; i++) {
+    const particle = document.createElement('span');
+    const angle = (Math.PI * 2 * i) / 18;
+    const distance = 38 + Math.random() * 54;
+    particle.className = 'click-burst';
+    particle.textContent = symbols[i % symbols.length];
+    particle.style.setProperty('--x', `${x}px`);
+    particle.style.setProperty('--y', `${y}px`);
+    particle.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+    particle.style.setProperty('--dy', `${Math.sin(angle) * distance - 28}px`);
+    particle.style.setProperty('--r', `${-35 + Math.random() * 70}deg`);
+    particle.style.setProperty('--s', `${12 + Math.random() * 9}px`);
+    particle.style.setProperty('--c', colors[i % colors.length]);
+    document.body.appendChild(particle);
+    setTimeout(() => particle.remove(), 950);
+  }
+}
+
+async function showFlowerDialog() {
+  if (flowerDialogShown) return;
+  flowerDialogShown = true;
+
+  const nameBit = targetName ? `, ${targetName}` : '';
+  const result = await swals.fire({
+    title: `Jujur ya${nameBit}...`,
+    html: 'Kalau ini bikin kamu senyum sedikit aja, aku boleh tahu lewat chat? Aku pengen dengar versi kamu.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Chat aku',
+    cancelButtonText: 'Lihat bunganya dulu'
+  });
+
+  if (result.isConfirmed) menuju();
+}
+
+document.addEventListener('click', (event) => {
+  const interactive = event.target.closest('a, button, [onclick], .swal2-confirm, .swal2-cancel');
+  if (interactive) playClick();
+});
 /* ── INIT ── */
 window.addEventListener('DOMContentLoaded', () => {
+  applyPersonalCopy();
   const Bn2 = document.getElementById('Bn2');
-  Bn2.textContent = 'Gamau';
+  Bn2.textContent = 'Malu ah';
   Bn2.style.display = 'none';
 
   
@@ -1257,7 +1387,6 @@ function fthilang() {
 
 /* ── BUKA SURAT ── */
 function memulai() {
-  document.getElementById('clickSound')?.play();
   const suratin = document.getElementById('suratin');
   suratin.classList.add('bounce');
       // Efek tambahan: scale + shadow + ring
@@ -1321,8 +1450,8 @@ function multifungsi() {
 }
 
 async function menuju() {
-  await swals.fire('OK! 🎉', 'Kirim pesan ke WhatsApp aku, ya!', 'success');
-  window.location = "https://api.whatsapp.com/send?phone=&text=" + encodeURIComponent(pesanwhatsapp);
+  await swals.fire('Aku tunggu ya', 'Kirim chat kecil ke WhatsApp aku.', 'success');
+  window.location.href = whatsappUrl + '?text=' + encodeURIComponent(pesanwhatsapp);
 }
 
   function ditolak() {
@@ -1364,10 +1493,13 @@ async function menuju() {
   setTimeout(() => { flagg = 1; }, 1000);
 }
 
+function ditolak2() { ditolak(); }
+
 /* ── DITERIMA DENGAN URUTAN TEKS YANG BENAR ── */
 function diterima() {
   if (flag === 0) return;
   flag = 0;
+  burstHearts(document.getElementById('By'));
   ftom = 0;
 
   // 1. Sembunyikan tombol
@@ -1427,6 +1559,7 @@ function goFlower() {
   fc.style.display = 'flex';
   requestAnimationFrame(() => fc.classList.add('active'));
   audio.play().catch(() => {});
+  setTimeout(showFlowerDialog, 15000);
 }
 
   // Matikan klik kanan

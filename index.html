@@ -11,6 +11,39 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
   <style>
 
+.brutal-shake {
+  animation: brutalShake .65s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes brutalShake {
+  0% {
+    transform: translateX(0) rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+  10% {
+    transform: translateX(-8px) rotate(-2deg) scale(1.05);
+  }
+  20% {
+    transform: translateX(8px) rotate(2deg) scale(.98);
+  }
+  30% {
+    transform: translateX(-10px) rotate(-3deg) scale(1.06);
+    filter: blur(.5px);
+  }
+  40% {
+    transform: translateX(10px) rotate(3deg) scale(.97);
+  }
+  55% {
+    transform: translateX(-6px) rotate(-1.5deg) scale(1.04);
+  }
+  70% {
+    transform: translateX(6px) rotate(1.5deg) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg) scale(1);
+  }
+}
     
 /* ── FONT ── */
 @font-face {
@@ -987,16 +1020,16 @@ html, body {
 /* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
 #Content {
   height: 330px;
-  min-height: 330px;
+  min-height: auto;
 }
 #bq {
-  min-height: 145px;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 #Tombol {
-  margin-top: 0px;
+  margin-top: 10px;
 }
 .click-burst {
   position: fixed;
@@ -1039,16 +1072,19 @@ html, body {
 @media (max-width:480px) {
   #Content {
     height: 310px;
-    min-height: 310px;
+    min-height: auto;
   }
 
-  #bq {
-    min-height: 135px;
-  }
+#bq {
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-  #Tombol {
-    margin-top: 0;
-  }
+#Tombol {
+  margin-top: 10px;
+}
 }
   </style>
 </head>
@@ -1089,7 +1125,7 @@ html, body {
       <!-- PERTANYAAN AWAL -->
       <div id="kalimat">Mau jadi pacarku?</div>
       <div id="kalimatb">Kalau jawabannya "iya", aku bakal seneng banget.</div>
-      <div id="pesanTolak">yahh jangan kabur dulu 😭</div>
+  
 
       <!-- TEKS YANG MUNCUL BERTAHAP -->
       <div id="kalimat2">Senyum kamu pasti lucu. 🌹</div>
@@ -1378,6 +1414,7 @@ function applyPersonalCopy() {
   targetName = getTargetName();
   if (!targetName) return;
 
+
   document.getElementById('kalimat').childNodes[0].nodeValue = `${targetName}, aku boleh nitip satu tanya kecil?`;
   document.getElementById('kalimatb').textContent = `kalau hati ${targetName} lagi kosong sedikit, boleh aku duduk di sana?`;
   document.getElementById('kalimat2').textContent = `hehe, ${targetName} bikin aku senyum beneran sekarang. 🌷`;
@@ -1416,8 +1453,8 @@ async function showFlowerDialog() {
   const nameBit = targetName ? `, ${targetName}` : '';
   const result = await swals.fire({
 title: `Boleh jujur nggak${nameBit}?`,
-html: 'Kalau ini bikin kamu senyum, chat aku ya. Itu aja udah bikin aku seneng.',
-confirmButtonText: 'Chat aku ❤️',
+html: 'Kalau ini bikin kamu senyum, walau dikit kasih tau aku yaa.',
+confirmButtonText: 'Pesan aku',
 cancelButtonText: 'Lihat bunganya dulu',
     icon: 'question',
     showCancelButton: true,
@@ -1548,8 +1585,21 @@ async function menuju() {
     sound.play().catch(err => console.log("Sound error:", err));
   }
   
-document.getElementById('kalimat').textContent = 'yahh jangan kabur dulu 😭';
-document.getElementById('kalimatb').textContent = 'pikirin lagi dong, aku masih nunggu nih.';
+
+const kalimat = document.getElementById('kalimat');
+const kalimatb = document.getElementById('kalimatb');
+
+kalimat.textContent = 'Lah kok ilang?! 🗿
+kalimatb.textContent = 'pilihannya cuman satu yaa.';
+
+kalimat.classList.remove('brutal-shake');
+kalimatb.classList.remove('brutal-shake');
+
+void kalimat.offsetWidth;
+void kalimatb.offsetWidth;
+
+kalimat.classList.add('brutal-shake');
+kalimatb.classList.add('brutal-shake');
   
   // Ambil tombol "Gamau"
   const btn = document.getElementById('Bn');

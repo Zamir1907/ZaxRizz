@@ -324,7 +324,7 @@ html, body {
 /* stiker gif */
 #bq > div {
   display:flex; justify-content:center; align-items:center;
-  margin-bottom:20px;
+  margin-bottom:12px;
 }
 #fotoakhir {
   width:160px; height:160px; object-fit:contain;
@@ -359,7 +359,7 @@ html, body {
 /* ── BUTTONS ── */
 #Tombol {
   display:none; gap:12px; justify-content:center;
-  flex-wrap:wrap; margin-top:28px; opacity:0;
+  flex-wrap:wrap; margin-top:8px; opacity:0;
   transform:scale(.9);
   transition:opacity .55s var(--ease), transform .55s var(--ease);
 }
@@ -1019,8 +1019,8 @@ html, body {
 
 /* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
 #Content {
-  height: 330px;
-  min-height: auto;
+  min-height: 330px;
+  height: auto;
 }
 #bq {
   min-height: auto;
@@ -1071,8 +1071,9 @@ html, body {
 }
 @media (max-width:480px) {
   #Content {
-    height: 310px;
-    min-height: auto;
+    min-height: 310px;
+    height: auto;
+    padding-bottom: 24px;
   }
 
 #bq {
@@ -1081,9 +1082,14 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
 }
+  
+  #fotoakhir {
+  width: 110px !important;
+  height: 110px !important;
+}
 
 #Tombol {
-  margin-top: 10px;
+  margin-top: 6px;
 }
 }
   </style>
@@ -1123,13 +1129,13 @@ html, body {
       </div>
 
       <!-- PERTANYAAN AWAL -->
-      <div id="kalimat">Mau jadi pacarku?</div>
-      <div id="kalimatb">Kalau jawabannya "iya", aku bakal seneng banget.</div>
-  <div id="pesanTolak">Lah kok ilang?! 🗿</div>
+      <div id="kalimat">Jadi pacarku yaa?</div>
+      <div id="kalimatb">Kalau jawabannya iya, aku bakal bahagia banget.</div>
+   
 
       <!-- TEKS YANG MUNCUL BERTAHAP -->
-      <div id="kalimat2">Senyum kamu pasti lucu. 🌹</div>
-      <div id="kalimatb2">Ini ada sesuatu buat kamu.</div>
+      <div id="kalimat2">Yay! makasih udah mau. 💚</div>
+      <div id="kalimatb2">tunggu yaa, ada sesuatu buat kamu..</div>
       <div id="kalimatc2"></div>
 
       <div id="kalimatc3"><div id="ctimer"></div></div>

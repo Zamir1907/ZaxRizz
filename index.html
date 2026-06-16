@@ -11,13 +11,6 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
   <style>
 
-/* Smooth scroll & performa */
-html {
-  scroll-behavior: smooth;
-}
-#flower-container {
-  transition: opacity 0.7s ease;
-}
     
 /* ── FONT ── */
 @font-face {
@@ -360,6 +353,7 @@ html, body {
    PAGE 2 — FLOWER SCENE
 ───────────────────────────────────────── */
 #flower-container {
+   transition: opacity 0.7s ease;
   position:fixed; inset:0; z-index:999;
   background:var(--bg);
   display:none; align-items:flex-end; justify-content:center;

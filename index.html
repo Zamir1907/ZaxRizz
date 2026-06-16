@@ -409,7 +409,7 @@ html, body {
   font-weight:300; color:var(--text);
   text-align:center; white-space:nowrap;
   letter-spacing:.03em;
-  animation: cuteFlowerText 3.8s ease-in-out infinite;
+  animation: flowerTextEnter 1.8s ease-out both, cuteFlowerText 3.8s ease-in-out 1.8s infinite;
   z-index:20;
 }
 .flower-text span {
@@ -439,6 +439,24 @@ html, body {
   70% {
     transform: translateX(-50%) translateY(-3px) scale(1.02) rotate(1deg);
     text-shadow: 0 0 18px rgba(0,245,212,.45);
+  }
+}
+
+    @keyframes flowerTextEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(35px) scale(.9);
+    filter: blur(10px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-6px) scale(1.04);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -968,16 +986,17 @@ html, body {
 
 /* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
 #Content {
-  min-height: 310px;
+  height: 330px;
+  min-height: 330px;
 }
 #bq {
-  min-height: auto;
+  min-height: 145px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 #Tombol {
-  margin-top: 2px;
+  margin-top: 0px;
 }
 .click-burst {
   position: fixed;
@@ -1018,9 +1037,18 @@ html, body {
   to { opacity: 0; transform: translateY(8px) scale(.96); filter: blur(6px); }
 }
 @media (max-width:480px) {
-  #Content { min-height: 320px; }
-  #bq { min-height: 180px; }
-  #Tombol { margin-top: 6px; }
+  #Content {
+    height: 310px;
+    min-height: 310px;
+  }
+
+  #bq {
+    min-height: 135px;
+  }
+
+  #Tombol {
+    margin-top: 0;
+  }
 }
   </style>
 </head>
@@ -1061,7 +1089,6 @@ html, body {
       <!-- PERTANYAAN AWAL -->
       <div id="kalimat">Mau jadi pacarku?</div>
       <div id="kalimatb">Kalau jawabannya "iya", aku bakal seneng banget.</div>
-      <div id="kalimatc">Aku serius kok.</div>
       <div id="pesanTolak">yahh jangan kabur dulu 😭</div>
 
       <!-- TEKS YANG MUNCUL BERTAHAP -->
@@ -1521,12 +1548,8 @@ async function menuju() {
     sound.play().catch(err => console.log("Sound error:", err));
   }
   
-  const pesanTolak = document.getElementById('pesanTolak');
-  pesanTolak.classList.add('show');
-  
-  // Sembunyikan tombol "Mau"
- // const tombolMau = document.getElementById('By');
- // tombolMau.style.display = 'none';
+document.getElementById('kalimat').textContent = 'yahh jangan kabur dulu 😭';
+document.getElementById('kalimatb').textContent = 'pikirin lagi dong, aku masih nunggu nih.';
   
   // Ambil tombol "Gamau"
   const btn = document.getElementById('Bn');
@@ -1555,6 +1578,8 @@ function ditolak2() { ditolak(); }
 function diterima() {
   if (flag === 0) return;
   flag = 0;
+  document.getElementById('kalimat').textContent = 'Mau jadi pacarku?';
+document.getElementById('kalimatb').textContent = 'Kalau jawabannya "iya", aku bakal seneng banget.';
   burstHearts(document.getElementById('By'));
   ftom = 0;
 
@@ -1566,12 +1591,12 @@ function diterima() {
   // 2. Sembunyikan pertanyaan awal
   document.getElementById('kalimat').style.opacity = '0';
   document.getElementById('kalimatb').style.opacity = '0';
-  document.getElementById('kalimatc').style.opacity = '0';
+ 
   
   setTimeout(() => {
     document.getElementById('kalimat').style.display = 'none';
     document.getElementById('kalimatb').style.display = 'none';
-    document.getElementById('kalimatc').style.display = 'none';
+  
   }, 300);
 
   // 3. Ganti GIF

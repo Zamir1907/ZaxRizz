@@ -185,6 +185,21 @@ html, body {
 }
 .page-eyebrow::after { transform: scaleX(-1); }
 
+/* TAMBAHKAN DI BAGIAN CSS */
+#suratin.clicked {
+  pointer-events: none !important;
+  cursor: default !important;
+  opacity: 0.6 !important;
+  filter: grayscale(0.3) brightness(0.85) !important;
+  transform: scale(0.97) !important;
+  box-shadow: 0 0 20px rgba(155,93,229,0.1) !important;
+}
+
+#suratin.clicked::before {
+  opacity: 0.2 !important;
+  animation-duration: 8s !important;
+}
+    
 /* avatar / suratin */
 #suratin {
   cursor:pointer;
@@ -288,7 +303,13 @@ html, body {
 #kalimat { font-family:var(--font-d); font-size:clamp(22px,5.5vw,30px); font-weight:300; line-height:1.45; background: linear-gradient(135deg, #fff 0%, var(--v2) 60%, var(--m1) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; position:relative; }
 #pesanTolak { font-size:12.5px; font-weight:300; color:var(--p1); opacity:0; position:absolute; left:50%; transform:translateX(-50%) scale(0); white-space:nowrap; bottom:-22px; transition:all .5s var(--ease); }
 #pesanTolak.show { opacity:1; transform:translateX(-50%) scale(1); }
-#kalimatb, #kalimatc { font-size:13px; font-weight:300; color:var(--muted); line-height:1.65; margin-top:6px; }
+#kalimatb, #kalimatc {
+  font-size:13px;
+  font-weight:300;
+  color:var(--muted);
+  line-height:1.35;
+  margin-top:3px;
+}
 
 /* TEKS YANG MUNCUL BERTAHAP — AWALNYA SEMUA DISEMBUNYIKAN */
 #kalimat2, #kalimat2b, #kalimatb2, #kalimatc2, #kalimatb3, #kalimatc3 {
@@ -388,7 +409,7 @@ html, body {
   font-weight:300; color:var(--text);
   text-align:center; white-space:nowrap;
   letter-spacing:.03em;
-  animation:floatText 4.5s ease-in-out infinite;
+  animation: cuteFlowerText 3.8s ease-in-out infinite;
   z-index:20;
 }
 .flower-text span {
@@ -405,6 +426,21 @@ html, body {
 @keyframes typing   { from{width:0} to{width:100%} }
 @keyframes blink-caret { 50%{border-color:transparent} }
 @keyframes hide-caret  { to{border-right:none} }
+
+    @keyframes cuteFlowerText {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+    text-shadow: 0 0 10px rgba(255,255,255,.25);
+  }
+  35% {
+    transform: translateX(-50%) translateY(-8px) scale(1.04) rotate(-1deg);
+    text-shadow: 0 0 18px rgba(241,91,181,.55);
+  }
+  70% {
+    transform: translateX(-50%) translateY(-3px) scale(1.02) rotate(1deg);
+    text-shadow: 0 0 18px rgba(0,245,212,.45);
+  }
+}
 
 /* floating hearts on flower page */
 .heart-float {
@@ -448,7 +484,7 @@ html, body {
    FLOWER CSS — palette updated to Gen-Z teal/violet
    (structure preserved, only colors upgraded)
 ───────────────────────────────────────── */
-.flowers { position:relative; transform:scale(0.9); }
+.flowers { position:relative; transform:scale(0.78); }
 
 .flower {
   position:absolute; bottom:10vmin;
@@ -918,7 +954,10 @@ html, body {
   }
   #fotoakhir { width: 120px !important; height: 120px !important; }
   #suratin { width: 80px; height: 80px; }
-  .flower-text { font-size: clamp(14px, 3vw, 18px) !important; top: 8% !important; }
+.flower-text {
+  font-size: clamp(17px, 4.5vw, 22px) !important;
+  top: 7% !important;
+}
   .flower-text span { padding: 0 12px !important; }
   
   #suratin { width:94px; height:94px; }
@@ -929,16 +968,16 @@ html, body {
 
 /* --- Revisi UI/UX: stable card, closer buttons, click burst, and smoother dialog --- */
 #Content {
-  min-height: 360px;
+  min-height: 310px;
 }
 #bq {
-  min-height: 200px;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 #Tombol {
-  margin-top: 8px;
+  margin-top: 2px;
 }
 .click-burst {
   position: fixed;
@@ -1023,6 +1062,7 @@ html, body {
       <div id="kalimat">Mau jadi pacarku?</div>
       <div id="kalimatb">Kalau jawabannya "iya", aku bakal seneng banget.</div>
       <div id="kalimatc">Aku serius kok.</div>
+      <div id="pesanTolak">yahh jangan kabur dulu 😭</div>
 
       <!-- TEKS YANG MUNCUL BERTAHAP -->
       <div id="kalimat2">Senyum kamu pasti lucu. 🌹</div>
@@ -1280,6 +1320,7 @@ let ftom = 0;
 let flag = 1;
 let flagg = 1;
 let ftganti = 0;
+let isProfileClicked = false;
 const whatsappUrl = 'https://wa.me/6281818647631';
 let targetName = '';
 let flowerDialogShown = false;
@@ -1396,7 +1437,10 @@ function fthilang() {
 
 /* ── BUKA SURAT ── */
 function memulai() {
+  if (isProfileClicked) return;
+  isProfileClicked = true;
   const suratin = document.getElementById('suratin');
+  suratin.classList.add('clicked');
   suratin.classList.add('bounce');
       // Efek tambahan: scale + shadow + ring
     suratin.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
@@ -1412,8 +1456,12 @@ function memulai() {
       ring.offsetHeight; // force reflow
       ring.style.animation = 'pulseRing 0.6s ease-out 2';
     });
+  
    suratin.style.pointerEvents = 'none'; 
-
+ suratin.style.cursor = 'default';
+  suratin.style.opacity = '0.7';
+  suratin.style.filter = 'grayscale(0.2) brightness(0.9)';
+  
   setTimeout(() => {
         // Animasi hilang teks "klik profil aku" yang lucu
     const ketEl = document.getElementById('ket');
